@@ -1,0 +1,83 @@
+mkdir -p /home/claude/site && cd /home/claude/site && cp /mnt/user-data/outputs/o-que-a-cidade-tem.html old.html && python3 - <<'EOF'
+import re,json,subprocess
+h=open('old.html',encoding='utf-8').read()
+i=h.index('const S=');j=h.index('const NI=')
+seg=h[i:j]
+js=seg+"\nconsole.log(JSON.stringify({R:R,C:C}))"
+js=js.replace('const $=','var $=')
+out=subprocess.run(['node','-e',js],capture_output=True,text=True)
+print(out.stderr[:300])
+d=json.loads(out.stdout)
+R=d['R'];C={int(k):v for k,v in d['C'].items()}
+def fix(i,**k):
+    R[i-1].update(k)
+fix(17,a="Parque de Alta Montanha de Nova Friburgo")
+fix(21,a="Rua das Rendas (Espaço ARP), Centro")
+fix(23,a="Nova Friburgo Country Clube, Centro")
+def row(id,n,c,dd,b,desc,a,hr,t,l,s,dt):
+    return dict(id=id,n=n,c=c,d=dd,b=b,desc=desc,a=a,h=hr,t=t,l=l,s=s,o="",dt=dt)
+D="28/09/2026"
+R=R[:27]
+new=[
+(28,"Associação Pestalozzi de Nova Friburgo",7,"Conselheiro Paulino","Conselheiro Paulino","Entidade filantrópica que provê serviços gratuitos de habilitação, reabilitação e educação inclusiva para pessoas com deficiência.","Rua Dr. Sílvio Henrique Braune, 22 - Conselheiro Paulino","Segunda a sexta, 08h às 17h","(22) 2522-4228","http://www.pestalozzifriburgo.org.br/"),
+(29,"Centro Social Nossa Senhora das Graças",1,"Sede","Olaria","Organização comunitária com projetos assistenciais e apoio a famílias, idosos e crianças em situação de vulnerabilidade.","Rua Vicente Sobrou, 25 - Olaria","Horários sob consulta","(22) 2522-8321","https://www.atados.com.br/ong/centro-social-nossa-senhora-das-gracas"),
+(30,"Praça Primeiro de Maio",4,"Sede","Olaria","Principal ponto de encontro, convivência e lazer a céu aberto do bairro Olaria.","Praça Primeiro de Maio, Olaria","Espaço público aberto 24h","","https://avozdaserra.com.br/noticias/praca-1o-de-maio-e-parquinho-sao-examples-de-espaco-publico-bem-cuidado"),
+(31,"Ginásio Poliesportivo de Conselheiro Paulino",3,"Conselheiro Paulino","Conselheiro Paulino","Infraestrutura pública municipal recuperada, usada para esportes coletivos e lazer noturno.","Rua Clarindo Rosa da Silva, s/nº - Conselheiro Paulino","Conforme agenda esportiva local","","https://www.pmnf.rj.gov.br/noticia/view/816"),
+(32,"Feira do Cônego",2,"Sede","Cônego","Feira comunitária recorrente com alimentos e hortifrúti da agricultura familiar.","Praça Sant'Ana, Cônego","Sábados pela manhã","","http://instagram.com/feiraconego"),
+(33,"Feira de Artesanato do Suspiro",8,"Sede","Centro","Feira de artesãos locais: vestuário, lembranças, artefatos manuais e gastronomia típica da serra.","Praça do Suspiro, Centro","Sábados, domingos e feriados, 09h às 18h","","https://descubranovafriburgo.com.br/pontos-turisticos/"),
+(34,"Polo de Moda Íntima - Olaria",9,"Sede","Olaria","Conjunto comercial e industrial reconhecido pela confecção e pelo desenvolvimento têxtil local.","Rua Júlio Antonio Thurler, Olaria","Horário comercial","","https://descubranovafriburgo.com.br/pontos-turisticos/"),
+(35,"Casa Suíça e Queijaria Escola",9,"Campo do Coelho","Conquista","Complexo cultural e memorial da colonização suíça, com queijos finos e chocolates artesanais.","Rodovia RJ-130, km 18 - Conquista","Terça a domingo, 09h às 17h","(22) 2543-2000","https://www.worldpackers.com/pt-BR/articles/o-que-fazer-em-nova-friburgo"),
+]
+ARP="Espaço ARP - Av. Conselheiro Julius Arp, 80, Centro";SESC="Sesc - Av. Pres. Costa e Silva, 231, Centro"
+E="https://www.espacoarp.com.br/";SL="https://www.sescrio.org.br/unidades/sesc-nova-friburgo/"
+new+=[
+(36,"Sustentarp – Hub de Logística Reversa",5,"Sede","Centro","Ponto físico para educação ambiental e recebimento de óleo vegetal usado e metais.",ARP,"Segunda a sexta, 09h às 18h","(22) 2525-8300",E),
+(37,"Ponto de Coleta Reciclotron (UFF)",5,"Sede","Centro","Contêiner para descarte e triagem de lixo eletroeletrônico, celulares, fios e periféricos.",ARP,"Segunda a sexta, 09h às 18h","",E),
+(38,"Coletor de Gás Gear Tips",5,"Sede","Centro","Coleta e destinação segura de cilindros e cartuchos de gás vazios do montanhismo local.",ARP,"Segunda a sexta, 09h às 18h","",E),
+(39,"Programa Curacycle",5,"Sede","Centro","Recepção de resíduos plásticos difíceis (tubos de pasta de dente, escovas) para reciclagem.",ARP,"Segunda a sexta, 09h às 18h","",E),
+(40,"Sesc+ Educação (Turno Complementar)",6,"Sede","Centro","Reforço e educação integrada para crianças e jovens no contraturno e pré-vestibular comunitário gratuito.",SESC,"Conforme turmas e editais","(22) 2543-5000",SL),
+(41,"Espaço ACT Sesc (Fabricação Digital)",6,"Sede","Centro","Laboratório aberto com impressoras 3D e softwares livres para democratizar o acesso à tecnologia.",SESC,"Agendamentos sob consulta","(22) 2543-5000",SL),
+(42,"Colab Sesc (Empreendedorismo)",1,"Sede","Centro","Incubadora e mentoria coletiva, com cursos de gestão de negócios para mulheres das comunidades da serra.",SESC,"Horários conforme calendário","(22) 2543-5000",SL),
+(43,"Sesc + Vida (Idosos)",1,"Sede","Centro","Convivência para a terceira idade: ginástica adaptada, turismo social e rodas de conversa.",SESC,"Dias úteis, turnos variados","(22) 2543-5000",SL),
+(44,"Unidades Móveis Sesc (Saúde/Odonto)",1,"Sede","Centro","Atendimento itinerante com exames de rastreio (mamografia) e odontologia preventiva.","Itinerante / "+SESC,"Conforme calendário municipal","(22) 2543-5000",SL),
+(45,"Laboratório Criativo Sesc",8,"Sede","Centro","Ciclos formativos gratuitos em economia criativa para profissionais locais.",SESC,"Editais periódicos","(22) 2543-5000",SL),
+]
+for r in new: R.append(row(*r,"Verificado",D))
+ll={28:(-22.2592,-42.5218),29:(-22.2982,-42.5414),30:(-22.2985,-42.5412),31:(-22.2533,-42.5185),32:(-22.3168,-42.5532),33:(-22.2811,-42.531),34:(-22.2968,-42.5422),35:(-22.241,-42.4345)}
+for i in range(36,40): ll[i]=(-22.2929,-42.5332)
+for i in range(40,46): ll[i]=(-22.2872,-42.5298)
+ll.update({k:tuple(v) for k,v in C.items() if k<=27})
+for r in R:
+    v=ll.get(r['id'])
+    r['lat'],r['lng']=(v if v else (None,None))
+open('dados.js','w',encoding='utf-8').write('// Dados dos recursos. Edite, adicione ou remova itens. c = índice da categoria (0-9); lat/lng = null se não houver coordenadas.\nconst RECURSOS='+json.dumps(R,ensure_ascii=False,indent=1)+';\n')
+print(len(R),sum(1 for r in R if r['lat']))
+# HTML
+a=h.index('const S=');b=h.index('const NI=')
+h=h[:a]+"const R=RECURSOS,C={};R.forEach(r=>{if(r.lat!=null)C[r.id]=[r.lat,r.lng]});\n"+h[b:]
+h=re.sub(r'const C=\{.*?\};\n','',h,count=1,flags=re.S) if False else h
+# remove old drawMap/grp
+a=h.index('\nlet Z=0;');b=h.index('function list(){')
+lf='''
+let MAP,LAY;
+function drawMap(l){const B=$("#pm");if(typeof L=="undefined"){B.innerHTML='<p class="note">Não foi possível carregar o mapa (verifique a conexão). Use a lista abaixo.</p>';return}
+if(!MAP){MAP=L.map("pm").setView([-22.283,-42.535],13);L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"&copy; contribuidores do OpenStreetMap"}).addTo(MAP);LAY=L.layerGroup().addTo(MAP)}
+LAY.clearLayers();const g={};l.filter(r=>C[r.id]).forEach(r=>(g[C[r.id]]=g[C[r.id]]||[]).push(r));const pts=[];
+Object.entries(g).forEach(([k,it])=>{const p=k.split(",").map(Number),c=it[0].c;pts.push(p);
+L.marker(p,{title:it[0].n,icon:L.divIcon({className:"",html:`<div style="background:hsl(${c*36},55%,38%);color:#fff;border:2px solid #fff;border-radius:50%;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font:700 12px system-ui;box-shadow:0 1px 4px #0006">${it.length>1?it.length:CATS[c][1]}</div>`,iconSize:[26,26],iconAnchor:[13,13]})}).addTo(LAY).bindPopup(`<b>${it.length>1?it.length+" recursos neste local":e(it[0].n)}</b>`+it.map(r=>`<div style="margin-top:6px"><a href="#" onclick="det(${r.id});return false">${e(r.n)}</a><br><small>${CATS[r.c][1]} ${e(CATS[r.c][0])}</small></div>`).join(""))});
+if(pts.length)MAP.fitBounds(pts,{padding:[30,30],maxZoom:16});
+$("#lg").innerHTML=[...new Set(l.filter(r=>C[r.id]).map(r=>r.c))].map(c=>`<span style="white-space:nowrap"><span style="color:hsl(${c*36},55%,38%)">●</span> ${CATS[c][0]}</span>`).join(" · ")+`<br>${l.filter(r=>!C[r.id]).length} resultado(s) sem coordenadas (online ou em vários locais) aparecem só na lista.`}
+'''
+h=h[:a]+lf+h[b:]
+h=re.sub(r'<label style="font-weight:400.*?<div id="gp" aria-live="polite"></div>','<div id="pm" role="region" aria-label="Mapa interativo dos recursos" style="height:420px;border-radius:22px;isolation:isolate"></div><p class="mu" id="lg"></p>',h,flags=re.S)
+h=re.sub(r'<p class="note">Os pontos usam.*?</p>','<p class="note">Toque num marcador para ver o recurso. Números indicam vários recursos no mesmo local. Use “Como chegar” na ficha para abrir a rota.</p>',h,flags=re.S)
+h=h.replace('function go(){','function go(){if(MAP){MAP.remove();MAP=null}',1)
+h=h.replace('<style>','<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"><script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>\n<style>',1)
+h=h.replace('<script>\nconst CATS','<script src="dados.js"></script>\n<script>\nconst CATS',1)
+h=h.replace('Os dados vêm da planilha de levantamento do projeto (verificação em 22/09/2026)','Os dados vêm da planilha de levantamento do projeto (verificações em 22 e 28/09/2026)')
+open('index.html','w',encoding='utf-8').write(h)
+print('CATS' in h, h.count('dados.js'), 'let Z' in h)
+EOF
+node -e "
+global.document={};global.window={};
+" ; grep -c "MAP" index.html; node --check <(sed -n '/<script>/,/<\/script>/p' index.html | sed '1d;$d') 2>&1 | head -5
