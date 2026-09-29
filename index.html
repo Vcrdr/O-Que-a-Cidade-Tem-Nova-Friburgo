@@ -54,6 +54,7 @@ label{font-weight:700;display:grid;gap:6px}.two{display:grid;grid-template-colum
 .ods{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}.ods div{border-radius:20px;padding:18px;background:var(--blue2)}
 .alt2{background:var(--g1);color:#eef7f0}.alt2 h2,.alt2 h3{color:#fff}
 footer{background:#163a2b;color:#dcebe1;padding:32px 0;font-size:14px}footer a{color:#bfe3cb}
+@keyframes drift{to{transform:translateX(36px)}}.cloud{animation:drift 16s ease-in-out infinite alternate}@media(prefers-reduced-motion:reduce){.cloud{animation:none}}
 .photo{width:100%;height:auto;border-radius:28px;box-shadow:0 10px 30px #1e4a3833;display:block}
 .two-col{display:grid;grid-template-columns:.9fr 1.1fr;gap:36px;align-items:center}
 blockquote{margin:16px 0;padding:14px 20px;border-left:6px solid var(--g2);background:var(--g3);border-radius:0 18px 18px 0;font:600 22px Fraunces,serif;color:var(--g1)}
@@ -89,10 +90,10 @@ form{padding:16px}.leaflet-popup-content .btn{width:100%}}
 <div class="ctas"><a class="btn" href="#explorar" data-view="mapa">Explorar o mapa</a><a class="btn alt" href="#categorias">Ver categorias</a></div>
 <p class="note">Iniciativa acadêmica e comunitária. Não é um serviço oficial da Prefeitura de Nova Friburgo.</p>
 </div>
-<img class="photo" src="images/cidade-panorama.jpg" width="545" height="304" alt="Vista de Nova Friburgo: prédios no vale cercados por montanhas verdes">
+<svg viewBox="0 0 400 300" role="img" aria-label="Ilustração de montanhas, árvores e casas"><rect width="400" height="300" rx="36" fill="#e4f0f7"/><circle cx="300" cy="70" r="30" fill="#f6dd9b"/><path d="M0 220 110 90l70 90 60-60 160 130v50H0z" fill="#9fd0ad"/><path d="M0 250 90 160l80 70 90-80 140 120v30H0z" fill="#1e4a38"/><g fill="#fffdf8"><rect x="60" y="235" width="34" height="28"/><rect x="290" y="240" width="40" height="24"/></g><g fill="#3f7ca6"><path d="M56 235 77 216l21 19z"/><path d="M286 240 310 220l24 20z"/></g><circle cx="200" cy="240" r="14" fill="#9fd0ad"/><rect x="198" y="248" width="4" height="16" fill="#5a4a34"/></svg>
 </div></section>
 
-<section id="percepcao"><div class="wrap two-col"><img class="photo" src="images/praca-centro.jpg" width="860" height="645" loading="lazy" alt="Praça arborizada no centro de Nova Friburgo, com canteiros floridos e o busto de uma personalidade">
+<section id="percepcao"><div class="wrap" style="max-width:820px">
 <div><h2>A percepção dos moradores</h2>
 <p>Uma reclamação comum entre moradores de Nova Friburgo é a falta de informação sobre o que acontece na própria cidade: eventos, atividades culturais, oportunidades e até serviços disponíveis. Ou a divulgação é insuficiente, ou é difícil achar tudo em um só lugar.</p>
 <blockquote>“Não tem NADA para fazer nessa cidade.”</blockquote>
