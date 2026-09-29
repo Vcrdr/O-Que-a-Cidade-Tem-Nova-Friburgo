@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>O que a cidade tem? – Nova Friburgo</title>
+<meta name="description" content="Guia comunitário de serviços, espaços e iniciativas de Nova Friburgo (RJ). Projeto de extensão universitária.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css">
+<style>
+:root{--g1:#1e4a38;--g2:#9fd0ad;--g3:#e3f1e6;--bg:#f7f3ea;--card:#fffdf8;--blue:#3f7ca6;--blue2:#e4f0f7;--ink:#24302a;--mut:#5a675f;--line:#ddd6c6}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;font:16px/1.6 'Nunito Sans',system-ui,sans-serif;color:var(--ink);background:var(--bg)}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;line-height:1.2;color:var(--g1);margin:0 0 .5em}
+a{color:var(--blue)}:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.wrap{max-width:1180px;margin:auto;padding:0 20px}section{padding:56px 0}
+header{position:sticky;top:0;z-index:1000;background:#fffdf8ee;backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:64px;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:10px;font:700 20px Fraunces,serif;color:var(--g1);text-decoration:none}
+nav a{margin-left:18px;color:var(--ink);text-decoration:none;font-weight:600}nav a:hover{color:var(--blue)}
+.btn{font:inherit;font-weight:700;border:0;border-radius:999px;padding:12px 22px;background:var(--g1);color:#fff;cursor:pointer;text-decoration:none;display:inline-block}
+.btn:hover{background:#163a2b}.btn.alt{background:#fff;color:var(--g1);border:2px solid var(--g1)}.btn.sm{padding:8px 16px;font-size:14px}
+.hero{background:linear-gradient(180deg,var(--g3),var(--bg));padding:64px 0 24px}
+.hero .wrap{display:grid;grid-template-columns:1.2fr .8fr;gap:32px;align-items:center}
+.hero h1{font-size:clamp(30px,5vw,50px)}.hero p{max-width:56ch;color:var(--mut);font-size:18px}
+.search{display:flex;gap:8px;margin:22px 0;max-width:560px}
+input,select,textarea{font:inherit;width:100%;padding:12px 14px;border:2px solid var(--line);border-radius:14px;background:#fff;color:var(--ink)}
+.search input{border-radius:999px;padding-left:20px}.ctas{display:flex;gap:12px;flex-wrap:wrap}
+.note{font-size:14px;color:var(--mut);margin-top:16px}
+.cats{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:16px}
+.cat{background:var(--card);border:2px solid var(--line);border-radius:22px;padding:18px;text-align:left;font:inherit;color:inherit;cursor:pointer;transition:transform .15s,border-color .15s}
+.cat:hover{transform:translateY(-3px);border-color:var(--c)}.cat i{font-style:normal;font-size:28px;display:grid;place-items:center;width:52px;height:52px;border-radius:16px;background:var(--c);margin-bottom:10px}
+.cat b{display:block;font-family:Fraunces,serif;color:var(--g1)}.cat span{font-size:14px;color:var(--mut)}.cat small{display:block;margin-top:6px;font-weight:700;color:var(--blue)}
+.filters{display:grid;grid-template-columns:2fr 1fr 1fr auto;gap:12px;margin-bottom:12px}
+.bar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+.tabs{display:none;gap:8px}.tabs button{flex:1}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
+#map{height:640px;border-radius:22px;border:2px solid var(--line);position:sticky;top:80px;background:var(--blue2)}
+#list{display:grid;gap:14px;max-height:640px;overflow:auto;padding-right:6px}
+.card{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:18px}
+.card h3{font-size:18px;margin:8px 0 4px}.card p{margin:4px 0;font-size:15px}.meta{color:var(--mut);font-size:14px!important}
+.card p:not(.meta){display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}.card .btn{margin-top:8px}
+.tag{display:inline-block;background:var(--c);border-radius:999px;padding:2px 12px;font-size:13px;font-weight:700;color:var(--g1)}
+.pin{display:block;width:24px;height:24px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:3px solid #fff;box-shadow:0 2px 5px #0006}
+.empty,.msg{background:var(--blue2);border-radius:18px;padding:20px;text-align:center;color:var(--g1)}
+dialog{border:0;border-radius:24px;max-width:640px;width:calc(100% - 24px);padding:0;background:var(--card);color:var(--ink)}
+dialog::backdrop{background:#0008}.dh{padding:24px 26px 8px}.db{padding:0 26px 24px}
+dl{display:grid;grid-template-columns:150px 1fr;gap:8px 14px;margin:14px 0}dt{font-weight:700;color:var(--g1)}dd{margin:0;overflow-wrap:anywhere}.na{color:var(--mut);font-style:italic}
+.x{float:right;background:#eee;color:var(--ink);border-radius:50%;width:40px;height:40px;padding:0}
+form{display:grid;gap:14px;background:var(--card);border:2px solid var(--line);border-radius:22px;padding:24px;max-width:720px}
+label{font-weight:700;display:grid;gap:6px}.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.ok{background:var(--g3);border:2px solid var(--g2);border-radius:18px;padding:18px;max-width:720px;margin-top:14px}
+.ods{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}.ods div{border-radius:20px;padding:18px;background:var(--blue2)}
+.alt2{background:var(--g1);color:#eef7f0}.alt2 h2,.alt2 h3{color:#fff}
+footer{background:#163a2b;color:#dcebe1;padding:32px 0;font-size:14px}footer a{color:#bfe3cb}
+@keyframes drift{to{transform:translateX(36px)}}.cloud{animation:drift 16s ease-in-out infinite alternate}@media(prefers-reduced-motion:reduce){.cloud{animation:none}}
+.photo{width:100%;height:auto;border-radius:28px;box-shadow:0 10px 30px #1e4a3833;display:block}
+.two-col{display:grid;grid-template-columns:.9fr 1.1fr;gap:36px;align-items:center}
+blockquote{margin:16px 0;padding:14px 20px;border-left:6px solid var(--g2);background:var(--g3);border-radius:0 18px 18px 0;font:600 22px Fraunces,serif;color:var(--g1)}
+.quick{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;margin:18px 0}
+.quick a{background:var(--card);border:2px solid var(--line);border-radius:18px;padding:16px;color:var(--ink);text-decoration:none;font-weight:700;min-height:56px}.quick a:hover{border-color:var(--blue)}
+.contacts{display:grid;grid-template-columns:1fr 1fr;gap:12px}.contacts div{background:var(--blue2);border-radius:18px;padding:16px;overflow-wrap:anywhere}
+@media(max-width:900px){.two-col,.contacts{grid-template-columns:1fr}.two-col .photo{order:2}}
+@media(max-width:600px){body{font-size:16px}section{padding:40px 0}.wrap{padding:0 16px}
+header .wrap{padding-top:8px;padding-bottom:6px}nav{display:flex;overflow-x:auto;width:100%;gap:4px;padding-bottom:4px;scrollbar-width:none}nav a{margin:0;padding:8px 14px;white-space:nowrap;background:var(--g3);border-radius:999px;font-size:14px}
+.hero{padding:28px 0 8px}.hero .wrap{gap:20px}.hero p{font-size:16px}.search{flex-direction:column}.search .btn,.ctas .btn{width:100%;text-align:center}
+.cats{grid-template-columns:1fr 1fr;gap:10px}.cat{padding:14px}.cat span{display:none}.cat i{width:44px;height:44px}
+#ag{grid-template-columns:1fr}.filters{grid-template-columns:1fr}.btn,input,select,textarea{min-height:46px}.tabs .btn{flex:1}
+#map{height:62vh}blockquote{font-size:19px}.photo{border-radius:20px}
+dialog{margin:auto 0 0;width:100%;max-width:none;max-height:92vh;overflow:auto;border-radius:24px 24px 0 0}.dh,.db{padding-left:18px;padding-right:18px}
+form{padding:16px}.leaflet-popup-content .btn{width:100%}}
+@media(max-width:900px){.hero .wrap,.split,.ods,.two{grid-template-columns:1fr}.filters{grid-template-columns:1fr 1fr}.filters input{grid-column:1/-1}
+.tabs{display:flex}#map{position:static;height:460px}#list{max-height:none}.split[data-v=lista] #map,.split[data-v=mapa] #list{display:none}nav a{margin:0 10px 0 0;font-size:14px}dl{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+<a class="logo" href="#inicio" aria-label="O que a cidade tem? – início"><svg width="34" height="34" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" fill="#9fd0ad"/><path d="M6 30 15 16l6 9 4-6 9 11z" fill="#1e4a38"/><circle cx="27" cy="11" r="4" fill="#3f7ca6"/></svg>O que a cidade tem?</a>
+<nav aria-label="Principal"><a href="#categorias">Categorias</a><a href="#explorar">Explorar</a><a href="#agenda">Agenda</a><a href="#uteis">Serviços úteis</a><a href="#contribua">Contribua</a><a href="#sobre">Sobre</a></nav>
+</div></header>
+<main>
+<section class="hero" id="inicio"><div class="wrap">
+<div>
+<h1>Descubra os espaços, serviços e iniciativas que fazem parte da sua cidade.</h1>
+<p>Um guia comunitário de Nova Friburgo que reúne em um só lugar onde ficam, o que oferecem, quando abrem e como chegar. Sem procurar em vários sites e redes sociais.</p>
+<form class="search" role="search" id="hs" style="all:unset;display:flex;gap:8px;margin:22px 0;max-width:560px">
+<input id="hq" type="search" placeholder="Busque por nome, bairro ou serviço" aria-label="Buscar recurso"><button class="btn" type="submit">Buscar</button></form>
+<div class="ctas"><a class="btn" href="#explorar" data-view="mapa">Explorar o mapa</a><a class="btn alt" href="#categorias">Ver categorias</a></div>
+<p class="note">Iniciativa acadêmica e comunitária. Não é um serviço oficial da Prefeitura de Nova Friburgo.</p>
+</div>
+<svg viewBox="0 0 400 300" role="img" aria-label="Ilustração de montanhas, árvores e casas"><rect width="400" height="300" rx="36" fill="#e4f0f7"/><circle cx="300" cy="70" r="30" fill="#f6dd9b"/><path d="M0 220 110 90l70 90 60-60 160 130v50H0z" fill="#9fd0ad"/><path d="M0 250 90 160l80 70 90-80 140 120v30H0z" fill="#1e4a38"/><g fill="#fffdf8"><rect x="60" y="235" width="34" height="28"/><rect x="290" y="240" width="40" height="24"/></g><g fill="#3f7ca6"><path d="M56 235 77 216l21 19z"/><path d="M286 240 310 220l24 20z"/></g><circle cx="200" cy="240" r="14" fill="#9fd0ad"/><rect x="198" y="248" width="4" height="16" fill="#5a4a34"/></svg>
+</div></section>
+
+<section id="percepcao"><div class="wrap" style="max-width:820px">
+<div><h2>A percepção dos moradores</h2>
+<p>Uma reclamação comum entre moradores de Nova Friburgo é a falta de informação sobre o que acontece na própria cidade: eventos, atividades culturais, oportunidades e até serviços disponíveis. Ou a divulgação é insuficiente, ou é difícil achar tudo em um só lugar.</p>
+<blockquote>“Não tem NADA para fazer nessa cidade.”</blockquote>
+<p>A frase é frequente, sobretudo por vivermos numa cidade do interior, onde parece que as opções de lazer são limitadas. Mas, olhando de perto, muitas iniciativas, eventos e espaços existem e só não chegam ao conhecimento da população.</p>
+<p>Isso mostra uma falha de comunicação entre os recursos disponíveis e os moradores: oportunidades se perdem, serviços deixam de ser usados e a visão sobre a cidade fica menor do que ela é. É daqui que nasce o <b>“O que a cidade tem?”</b>, para reunir e organizar recursos, serviços, eventos e espaços de Nova Friburgo e valorizar as iniciativas locais.</p></div></div></section>
+
+<section id="categorias"><div class="wrap"><h2>Categorias</h2><p style="color:var(--mut)">Escolha um tipo de recurso para ver o que existe na cidade.</p><div class="cats" id="cats"></div></div></section>
+
+<section id="explorar" style="background:#fffdf8"><div class="wrap">
+<h2>Explorar recursos</h2>
+<div class="filters">
+<label><span class="sr" style="position:absolute;left:-9999px">Pesquisar</span><input id="q" type="search" placeholder="Pesquisar pelo nome do local"></label>
+<label><span style="position:absolute;left:-9999px">Categoria</span><select id="fc"></select></label>
+<label><span style="position:absolute;left:-9999px">Distrito</span><select id="fd"></select></label>
+<button class="btn alt" id="clr" type="button">Limpar</button></div>
+<div class="bar"><span id="count" aria-live="polite"></span><div class="tabs" role="group" aria-label="Modo de visualização"><button class="btn sm" data-v="lista">Lista</button><button class="btn sm alt" data-v="mapa">Mapa</button></div></div>
+<div class="split" id="split" data-v="lista"><div id="list"><div class="msg">Carregando recursos…</div></div><div id="map" role="region" aria-label="Mapa de Nova Friburgo"></div></div>
+<p class="note">Recursos sem coordenadas confirmadas aparecem na lista, mas não no mapa.</p>
+</div></section>
+
+<section id="agenda" style="background:#fffdf8"><div class="wrap"><h2>Agenda da cidade</h2><p style="color:var(--mut);max-width:62ch">Eventos cadastrados que ainda não terminaram. A lista se atualiza sozinha conforme as datas.</p><div class="cats" id="ag"></div>
+<p class="note">Mais eventos: <a href="https://www.pmnf.rj.gov.br/evento" target="_blank" rel="noopener">Calendário da Prefeitura</a> · <a href="https://www.espacoarp.com.br/agenda-cultural/" target="_blank" rel="noopener">Agenda do Espaço ARP</a> · <a href="https://novafriburgoagora.com.br/agenda" target="_blank" rel="noopener">Nova Friburgo Agora</a></p></div></section>
+
+<section id="uteis"><div class="wrap"><h2>Serviços úteis</h2><p style="color:var(--mut);max-width:62ch">Atalhos para canais oficiais da Prefeitura. Os links abrem o site oficial em outra aba.</p>
+<div class="quick"><a href="https://matriculaonline.pmnf.rj.gov.br/" target="_blank" rel="noopener">🎒 Pré-matrícula na rede municipal</a><a href="https://www.pmnf.rj.gov.br/documento/view/52?slug=defesa-civil-localizacao-dos-pontos-de-apoio" target="_blank" rel="noopener">🛟 Pontos de apoio da Defesa Civil</a><a href="https://www.pmnf.rj.gov.br/servico/view/10/casa-do-trabalhador" target="_blank" rel="noopener">💼 Casa do Trabalhador</a><a href="https://www.pmnf.rj.gov.br/servico/view/8/carta-de-servicos-ao-cidadao" target="_blank" rel="noopener">📄 Carta de Serviços ao Cidadão</a><a href="https://www.pmnf.rj.gov.br/servico" target="_blank" rel="noopener">🧾 Todos os serviços</a><a href="https://www.pmnf.rj.gov.br/turismo" target="_blank" rel="noopener">⛰️ Pontos turísticos</a><a href="https://www.pmnf.rj.gov.br/noticia" target="_blank" rel="noopener">📰 Notícias da Prefeitura</a><a href="https://falabr.cgu.gov.br/web/RJ/Nova%20Friburgo" target="_blank" rel="noopener">📣 Ouvidoria</a></div>
+<div class="contacts"><div><b>Prefeitura</b><br>(22) 2525-9100<br>Seg. a sex., 9h às 17h<br>ouvidoriageral@pmnf.rj.gov.br</div><div><b>Defesa Civil</b><br>Emergências 24h: <a href="tel:199">199</a><br>(22) 2522-8182</div></div></div></section>
+
+<section id="contribua"><div class="wrap"><h2>Contribua com o mapa</h2>
+<p style="max-width:62ch;color:var(--mut)">Conhece um recurso que não está aqui ou viu uma informação desatualizada? Conte para a gente. Toda sugestão é verificada antes de ser publicada.</p>
+<form id="cf"><label>Nome do recurso<input name="nome" required></label>
+<div class="two"><label>Categoria<select name="cat" required id="cc"></select></label><label>Distrito<select name="dist" id="cd"></select></label></div>
+<label>Endereço ou localização<input name="end" required></label>
+<label>Descrição<textarea name="desc" rows="3"></textarea></label>
+<div class="two"><label>Contato (se houver)<input name="contato"></label><label>Link da fonte oficial<input name="link" type="url" placeholder="https://"></label></div>
+<label>Observações (opcional)<textarea name="obs" rows="2"></textarea></label>
+<input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true"><button class="btn" type="submit" id="sb">Enviar sugestão</button></form>
+<div class="ok" id="ok" role="status" hidden><b>Sugestão enviada!</b> Obrigado por ajudar. Toda sugestão é verificada pela equipe antes de aparecer no mapa.</div>
+<div class="ok" id="er" role="alert" hidden style="background:#fdeaea;border-color:#e3a0a0"><b>Não foi possível enviar agora.</b> Tente de novo em instantes ou <a id="mt" href="#">envie pelo seu aplicativo de e-mail</a>.</div>
+</div></section>
+
+<section id="sobre" class="alt2"><div class="wrap"><h2>Sobre o projeto</h2>
+<p style="max-width:70ch">“O que a cidade tem?” é uma atividade de extensão universitária do curso de Análise e Desenvolvimento de Sistemas, ligada à disciplina “Viver Bem de Verdade: Saúde, Comida e Sociedade”. Nasceu de uma pesquisa com 21 moradores de Nova Friburgo, que contaram como é difícil encontrar informações sobre o que a cidade oferece e pediram localização, horários, contatos, serviços e como chegar.</p>
+<p style="max-width:70ch">As informações vêm de fontes públicas, com a fonte e a data da última verificação em cada ficha. Quando um dado não foi confirmado, dizemos isso em vez de adivinhar. A plataforma <b>não é um serviço oficial da Prefeitura</b>.</p>
+<div class="ods"><div><h3>ODS 3 · Saúde e Bem-Estar</h3><p style="color:var(--ink)">Facilita o acesso a serviços, espaços de convivência, lazer e alimentação que contribuem para o bem-estar.</p></div><div><h3>ODS 11 · Cidades e Comunidades Sustentáveis</h3><p style="color:var(--ink)">Valoriza o território e aproxima moradores dos recursos locais, incluindo pontos de reciclagem.</p></div></div>
+<p class="note" style="color:#bfe3cb">Essa é uma contribuição do projeto, e não uma solução, por si só, para problemas estruturais da cidade.</p></div></section>
+</main>
+<footer><div class="wrap"><b>O que a cidade tem?</b> · Projeto de extensão universitária (ADS) · Nova Friburgo, RJ.<br>Iniciativa acadêmica e comunitária, sem vínculo oficial com a Prefeitura. Contato da Prefeitura no <a href="https://www.pmnf.rj.gov.br/">site oficial</a>. Mapa © colaboradores do <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>.</div></footer>
+<dialog id="dlg" aria-labelledby="dt"></dialog>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+const CATS=[["Serviços públicos","🏛️","#b9d7ea","Secretarias, canais e serviços do município."],["Projetos sociais","🤝","#f6d6c2","Apoio, capacitação e convivência."],["Feiras e iniciativas de alimentação","🥕","#f6e3a8","Feiras, produtores e eventos gastronômicos."],["Espaços de lazer","🌄","#bfe3cb","Esporte, lazer e turismo na cidade."],["Praças e áreas verdes","🌳","#a8dbb8","Praças e natureza para o dia a dia."],["Pontos de reciclagem e coleta","♻️","#c9e4a8","Onde descartar do jeito certo."],["Bibliotecas e espaços educativos","📚","#d5cdf0","Cursos, reforço e laboratórios."],["Associações comunitárias","🏘️","#f2c9d6","Entidades que atuam nos bairros."],["Projetos culturais","🎭","#f6c9a0","Teatro, artesanato e agenda cultural."],["Outros recursos comunitários","✨","#d9d9d0","Iniciativas que não cabem nas outras."]];
+const DIST=["Sede","Riograndina","Campo do Coelho","Amparo","Lumiar","Conselheiro Paulino","São Pedro da Serra","Mury"];
+const NA='Informação não cadastrada',$=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const norm=s=>String(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+const ci=n=>Math.max(0,CATS.findIndex(c=>c[0]===n));
+let D=[],S={q:'',cat:'',dist:''},map,layer;
+
+function opts(sel,first,arr){sel.innerHTML=`<option value="">${first}</option>`+arr.map(a=>`<option>${esc(a)}</option>`).join('')}
+opts($('#fc'),'Todas as categorias',CATS.map(c=>c[0]));opts($('#fd'),'Todos os distritos',DIST);
+opts($('#cc'),'Escolha…',CATS.map(c=>c[0]));opts($('#cd'),'Não sei',DIST);
+
+function filtered(){const q=norm(S.q);return D.filter(r=>(!S.cat||r.cat===S.cat)&&(!S.dist||r.distrito===S.dist)&&(!q||norm(r.nome+' '+r.bairro+' '+r.desc+' '+r.cat).includes(q)))}
+function card(r){const c=CATS[ci(r.cat)];return `<article class="card"><span class="tag" style="--c:${c[2]}">${c[1]} ${esc(r.cat)}</span><h3>${esc(r.nome)}</h3><p class="meta">📍 ${esc(r.bairro||'Nova Friburgo')} · ${esc(r.distrito||'Distrito não informado')} · ${r.lat!=null?'no mapa':'sem ponto no mapa'}</p><p>${esc(r.desc)}</p><button class="btn sm" data-id="${r.id}">Ver detalhes</button></article>`}
+function render(){
+ const f=filtered();
+ $('#count').textContent=`${f.length} ${f.length===1?'recurso encontrado':'recursos encontrados'}`;
+ $('#list').innerHTML=f.length?f.map(card).join(''):'<div class="empty"><b>Nada encontrado.</b><br>Tente outro nome ou limpe os filtros.</div>';
+ if(!map)return;layer.clearLayers();const pts=[];
+ f.filter(r=>r.lat!=null).forEach(r=>{const c=CATS[ci(r.cat)][2];
+  L.marker([r.lat,r.lng],{title:r.nome,icon:L.divIcon({className:'',html:`<span class="pin" style="background:${c}"></span>`,iconSize:[24,24],iconAnchor:[6,26],popupAnchor:[6,-24]})})
+  .bindPopup(`<b>${esc(r.nome)}</b><br>${esc(r.cat)}<br>${esc(r.bairro||'')}<br><button class="btn sm" data-id="${r.id}">Ver ficha</button>`).addTo(layer);pts.push([r.lat,r.lng])});
+ if(pts.length)map.fitBounds(pts,{padding:[30,30],maxZoom:15});
+}
+function initMap(){
+ if(!window.L){$('#map').innerHTML='<div class="msg">Não foi possível carregar o mapa. Use a lista ou verifique sua conexão.</div>';return}
+ map=L.map('map').setView([-22.2819,-42.5311],13);
+ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap'}).addTo(map);layer=L.layerGroup().addTo(map);
+}
+function row(k,v,alt){return `<dt>${k}</dt><dd>${v?v:`<span class="na">${alt||NA}</span>`}</dd>`}
+function url(u){return /^https?:\/\//.test(u||'')?esc(u):null}
+function fmt(d){return d?d.split('-').reverse().join('/'):''}
+function ficha(id){
+ const r=D.find(x=>x.id==id),c=CATS[ci(r.cat)],lk=url(r.link),fo=url(r.fonte);
+ const route=r.lat!=null?`https://www.google.com/maps/dir/?api=1&destination=${r.lat},${r.lng}`:`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(r.end||r.nome+' Nova Friburgo')}`;
+ $('#dlg').innerHTML=`<div class="dh"><button class="btn x" id="cl" aria-label="Fechar">✕</button><span class="tag" style="--c:${c[2]}">${c[1]} ${esc(r.cat)}</span><h2 id="dt" style="margin-top:10px">${esc(r.nome)}</h2></div><div class="db"><p>${esc(r.desc)}</p><dl>
+ ${row('Endereço',esc(r.end))}${row('Distrito',esc(r.distrito))}${row('Bairro / localidade',esc(r.bairro))}
+ ${row('Horário',esc(r.horario),'Consulte o canal oficial')}${row('Contato',esc(r.contato))}
+ ${row('Link oficial',lk&&`<a href="${lk}" target="_blank" rel="noopener">${lk}</a>`,'Consulte o canal oficial')}
+ ${row('Fonte',fo&&`<a href="${fo}" target="_blank" rel="noopener">Ver fonte</a>`)}
+ ${row('Verificação',esc((r.status||'')+(r.data?' em '+fmt(r.data):'')))}${row('Observações',esc(r.obs))}</dl>
+ <a class="btn" href="${route}" target="_blank" rel="noopener">Como chegar</a>
+ ${r.lat==null?'<p class="note">Sem coordenadas confirmadas: a rota usa o endereço.</p>':''}</div>`;
+ $('#dlg').showModal();$('#cl').onclick=()=>$('#dlg').close();
+}
+$('#dlg').addEventListener('click',e=>{if(e.target.id==='dlg')e.target.close()});
+document.addEventListener('click',e=>{
+ const b=e.target.closest('[data-id]');if(b)return ficha(b.dataset.id);
+ const c=e.target.closest('[data-cat]');if(c){S.cat=c.dataset.cat;$('#fc').value=S.cat;render();$('#explorar').scrollIntoView()}
+ const v=e.target.closest('[data-v]');if(v&&v.closest('.tabs')){setView(v.dataset.v)}
+ const w=e.target.closest('a[data-view]');if(w)setView(w.dataset.view);
+});
+function setView(v){$('#split').dataset.v=v;document.querySelectorAll('.tabs button').forEach(b=>b.classList.toggle('alt',b.dataset.v!==v));if(map)setTimeout(()=>map.invalidateSize(),50)}
+$('#q').oninput=e=>{S.q=e.target.value;render()};
+$('#fc').onchange=e=>{S.cat=e.target.value;render()};$('#fd').onchange=e=>{S.dist=e.target.value;render()};
+$('#clr').onclick=()=>{S={q:'',cat:'',dist:''};$('#q').value='';$('#fc').value='';$('#fd').value='';render()};
+$('#hs').onsubmit=e=>{e.preventDefault();S.q=$('#hq').value;$('#q').value=S.q;render();$('#explorar').scrollIntoView()};
+$('#cf').onsubmit=async e=>{e.preventDefault();const f=e.target,fd=new FormData(f);if(fd.get('_honey'))return;
+ const L={nome:'Nome do recurso',cat:'Categoria',dist:'Distrito',end:'Endereço ou localização',desc:'Descrição',contato:'Contato',link:'Link da fonte',obs:'Observações'};
+ const o={_subject:'Nova sugestão – O que a cidade tem?',_template:'table',_captcha:'false'};for(const k in L)o[L[k]]=fd.get(k)||'(não informado)';
+ const body=Object.entries(L).map(([k,v])=>v+': '+(fd.get(k)||'(não informado)')).join('\n');
+ $('#mt').href='mailto:oqueacidadetemads@gmail.com?subject='+encodeURIComponent('Sugestão – O que a cidade tem?')+'&body='+encodeURIComponent(body);
+ $('#ok').hidden=$('#er').hidden=true;const b=$('#sb');b.disabled=true;b.textContent='Enviando…';
+ try{const r=await fetch('https://formsubmit.co/ajax/oqueacidadetemads@gmail.com',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify(o)});
+  const j=await r.json();if(!r.ok||j.success==='false')throw 0;f.reset();$('#ok').hidden=false;$('#ok').scrollIntoView({block:'center'})}
+ catch(_){$('#er').hidden=false;$('#er').scrollIntoView({block:'center'})}
+ b.disabled=false;b.textContent='Enviar sugestão'};
+
+function agenda(){const t=new Date().toISOString().slice(0,10),ev=D.filter(r=>r.tipo==='Evento cultural'&&(!r.fim||r.fim>=t));
+ $('#ag').innerHTML=ev.length?ev.map(r=>`<article class="card"><span class="tag" style="--c:#f6e3a8">🗓️ Evento</span><h3>${esc(r.nome)}</h3><p class="meta">${esc(r.horario||'Data não cadastrada')}</p><p>📍 ${esc(r.end||'')}</p><button class="btn sm" data-id="${r.id}">Ver detalhes</button></article>`).join(''):'<div class="empty" style="grid-column:1/-1">Nenhum evento cadastrado no momento. Consulte os calendários abaixo.</div>'}
+initMap();
+fetch('data.json').then(r=>{if(!r.ok)throw 0;return r.json()}).then(d=>{
+ D=d;$('#cats').innerHTML=CATS.map(c=>`<button class="cat" style="--c:${c[2]}" data-cat="${esc(c[0])}"><i>${c[1]}</i><b>${esc(c[0])}</b><span>${esc(c[3])}</span><small>${D.filter(r=>r.cat===c[0]).length} recursos</small></button>`).join('');render();agenda()
+}).catch(()=>{$('#list').innerHTML='<div class="msg"><b>Não foi possível carregar os recursos.</b><br>Confira se o arquivo data.json está na mesma pasta e se o site está sendo aberto por um servidor (GitHub Pages ou <code>python -m http.server</code>).</div>'});
+</script>
+</body>
+</html>
