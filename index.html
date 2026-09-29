@@ -54,6 +54,21 @@ label{font-weight:700;display:grid;gap:6px}.two{display:grid;grid-template-colum
 .ods{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}.ods div{border-radius:20px;padding:18px;background:var(--blue2)}
 .alt2{background:var(--g1);color:#eef7f0}.alt2 h2,.alt2 h3{color:#fff}
 footer{background:#163a2b;color:#dcebe1;padding:32px 0;font-size:14px}footer a{color:#bfe3cb}
+.photo{width:100%;height:auto;border-radius:28px;box-shadow:0 10px 30px #1e4a3833;display:block}
+.two-col{display:grid;grid-template-columns:.9fr 1.1fr;gap:36px;align-items:center}
+blockquote{margin:16px 0;padding:14px 20px;border-left:6px solid var(--g2);background:var(--g3);border-radius:0 18px 18px 0;font:600 22px Fraunces,serif;color:var(--g1)}
+.quick{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;margin:18px 0}
+.quick a{background:var(--card);border:2px solid var(--line);border-radius:18px;padding:16px;color:var(--ink);text-decoration:none;font-weight:700;min-height:56px}.quick a:hover{border-color:var(--blue)}
+.contacts{display:grid;grid-template-columns:1fr 1fr;gap:12px}.contacts div{background:var(--blue2);border-radius:18px;padding:16px;overflow-wrap:anywhere}
+@media(max-width:900px){.two-col,.contacts{grid-template-columns:1fr}.two-col .photo{order:2}}
+@media(max-width:600px){body{font-size:16px}section{padding:40px 0}.wrap{padding:0 16px}
+header .wrap{padding-top:8px;padding-bottom:6px}nav{display:flex;overflow-x:auto;width:100%;gap:4px;padding-bottom:4px;scrollbar-width:none}nav a{margin:0;padding:8px 14px;white-space:nowrap;background:var(--g3);border-radius:999px;font-size:14px}
+.hero{padding:28px 0 8px}.hero .wrap{gap:20px}.hero p{font-size:16px}.search{flex-direction:column}.search .btn,.ctas .btn{width:100%;text-align:center}
+.cats{grid-template-columns:1fr 1fr;gap:10px}.cat{padding:14px}.cat span{display:none}.cat i{width:44px;height:44px}
+#ag{grid-template-columns:1fr}.filters{grid-template-columns:1fr}.btn,input,select,textarea{min-height:46px}.tabs .btn{flex:1}
+#map{height:62vh}blockquote{font-size:19px}.photo{border-radius:20px}
+dialog{margin:auto 0 0;width:100%;max-width:none;max-height:92vh;overflow:auto;border-radius:24px 24px 0 0}.dh,.db{padding-left:18px;padding-right:18px}
+form{padding:16px}.leaflet-popup-content .btn{width:100%}}
 @media(max-width:900px){.hero .wrap,.split,.ods,.two{grid-template-columns:1fr}.filters{grid-template-columns:1fr 1fr}.filters input{grid-column:1/-1}
 .tabs{display:flex}#map{position:static;height:460px}#list{max-height:none}.split[data-v=lista] #map,.split[data-v=mapa] #list{display:none}nav a{margin:0 10px 0 0;font-size:14px}dl{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
@@ -62,7 +77,7 @@ footer{background:#163a2b;color:#dcebe1;padding:32px 0;font-size:14px}footer a{c
 <body>
 <header><div class="wrap">
 <a class="logo" href="#inicio" aria-label="O que a cidade tem? – início"><svg width="34" height="34" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" fill="#9fd0ad"/><path d="M6 30 15 16l6 9 4-6 9 11z" fill="#1e4a38"/><circle cx="27" cy="11" r="4" fill="#3f7ca6"/></svg>O que a cidade tem?</a>
-<nav aria-label="Principal"><a href="#categorias">Categorias</a><a href="#explorar">Explorar</a><a href="#contribua">Contribua</a><a href="#sobre">Sobre</a></nav>
+<nav aria-label="Principal"><a href="#categorias">Categorias</a><a href="#explorar">Explorar</a><a href="#agenda">Agenda</a><a href="#uteis">Serviços úteis</a><a href="#contribua">Contribua</a><a href="#sobre">Sobre</a></nav>
 </div></header>
 <main>
 <section class="hero" id="inicio"><div class="wrap">
@@ -74,8 +89,15 @@ footer{background:#163a2b;color:#dcebe1;padding:32px 0;font-size:14px}footer a{c
 <div class="ctas"><a class="btn" href="#explorar" data-view="mapa">Explorar o mapa</a><a class="btn alt" href="#categorias">Ver categorias</a></div>
 <p class="note">Iniciativa acadêmica e comunitária. Não é um serviço oficial da Prefeitura de Nova Friburgo.</p>
 </div>
-<svg viewBox="0 0 400 300" role="img" aria-label="Ilustração de montanhas, árvores e casas"><rect width="400" height="300" rx="36" fill="#e4f0f7"/><circle cx="300" cy="70" r="30" fill="#f6dd9b"/><path d="M0 220 110 90l70 90 60-60 160 130v50H0z" fill="#9fd0ad"/><path d="M0 250 90 160l80 70 90-80 140 120v30H0z" fill="#1e4a38"/><g fill="#fffdf8"><rect x="60" y="235" width="34" height="28"/><rect x="290" y="240" width="40" height="24"/></g><g fill="#3f7ca6"><path d="M56 235 77 216l21 19z"/><path d="M286 240 310 220l24 20z"/></g><circle cx="200" cy="240" r="14" fill="#9fd0ad"/><rect x="198" y="248" width="4" height="16" fill="#5a4a34"/></svg>
+<img class="photo" src="images/cidade-panorama.jpg" width="545" height="304" alt="Vista de Nova Friburgo: prédios no vale cercados por montanhas verdes">
 </div></section>
+
+<section id="percepcao"><div class="wrap two-col"><img class="photo" src="images/praca-centro.jpg" width="860" height="645" loading="lazy" alt="Praça arborizada no centro de Nova Friburgo, com canteiros floridos e o busto de uma personalidade">
+<div><h2>A percepção dos moradores</h2>
+<p>Uma reclamação comum entre moradores de Nova Friburgo é a falta de informação sobre o que acontece na própria cidade: eventos, atividades culturais, oportunidades e até serviços disponíveis. Ou a divulgação é insuficiente, ou é difícil achar tudo em um só lugar.</p>
+<blockquote>“Não tem NADA para fazer nessa cidade.”</blockquote>
+<p>A frase é frequente, sobretudo por vivermos numa cidade do interior, onde parece que as opções de lazer são limitadas. Mas, olhando de perto, muitas iniciativas, eventos e espaços existem e só não chegam ao conhecimento da população.</p>
+<p>Isso mostra uma falha de comunicação entre os recursos disponíveis e os moradores: oportunidades se perdem, serviços deixam de ser usados e a visão sobre a cidade fica menor do que ela é. É daqui que nasce o <b>“O que a cidade tem?”</b>, para reunir e organizar recursos, serviços, eventos e espaços de Nova Friburgo e valorizar as iniciativas locais.</p></div></div></section>
 
 <section id="categorias"><div class="wrap"><h2>Categorias</h2><p style="color:var(--mut)">Escolha um tipo de recurso para ver o que existe na cidade.</p><div class="cats" id="cats"></div></div></section>
 
@@ -90,6 +112,13 @@ footer{background:#163a2b;color:#dcebe1;padding:32px 0;font-size:14px}footer a{c
 <div class="split" id="split" data-v="lista"><div id="list"><div class="msg">Carregando recursos…</div></div><div id="map" role="region" aria-label="Mapa de Nova Friburgo"></div></div>
 <p class="note">Recursos sem coordenadas confirmadas aparecem na lista, mas não no mapa.</p>
 </div></section>
+
+<section id="agenda" style="background:#fffdf8"><div class="wrap"><h2>Agenda da cidade</h2><p style="color:var(--mut);max-width:62ch">Eventos cadastrados que ainda não terminaram. A lista se atualiza sozinha conforme as datas.</p><div class="cats" id="ag"></div>
+<p class="note">Mais eventos: <a href="https://www.pmnf.rj.gov.br/evento" target="_blank" rel="noopener">Calendário da Prefeitura</a> · <a href="https://www.espacoarp.com.br/agenda-cultural/" target="_blank" rel="noopener">Agenda do Espaço ARP</a> · <a href="https://novafriburgoagora.com.br/agenda" target="_blank" rel="noopener">Nova Friburgo Agora</a></p></div></section>
+
+<section id="uteis"><div class="wrap"><h2>Serviços úteis</h2><p style="color:var(--mut);max-width:62ch">Atalhos para canais oficiais da Prefeitura. Os links abrem o site oficial em outra aba.</p>
+<div class="quick"><a href="https://matriculaonline.pmnf.rj.gov.br/" target="_blank" rel="noopener">🎒 Pré-matrícula na rede municipal</a><a href="https://www.pmnf.rj.gov.br/documento/view/52?slug=defesa-civil-localizacao-dos-pontos-de-apoio" target="_blank" rel="noopener">🛟 Pontos de apoio da Defesa Civil</a><a href="https://www.pmnf.rj.gov.br/servico/view/10/casa-do-trabalhador" target="_blank" rel="noopener">💼 Casa do Trabalhador</a><a href="https://www.pmnf.rj.gov.br/servico/view/8/carta-de-servicos-ao-cidadao" target="_blank" rel="noopener">📄 Carta de Serviços ao Cidadão</a><a href="https://www.pmnf.rj.gov.br/servico" target="_blank" rel="noopener">🧾 Todos os serviços</a><a href="https://www.pmnf.rj.gov.br/turismo" target="_blank" rel="noopener">⛰️ Pontos turísticos</a><a href="https://www.pmnf.rj.gov.br/noticia" target="_blank" rel="noopener">📰 Notícias da Prefeitura</a><a href="https://falabr.cgu.gov.br/web/RJ/Nova%20Friburgo" target="_blank" rel="noopener">📣 Ouvidoria</a></div>
+<div class="contacts"><div><b>Prefeitura</b><br>(22) 2525-9100<br>Seg. a sex., 9h às 17h<br>ouvidoriageral@pmnf.rj.gov.br</div><div><b>Defesa Civil</b><br>Emergências 24h: <a href="tel:199">199</a><br>(22) 2522-8182</div></div></div></section>
 
 <section id="contribua"><div class="wrap"><h2>Contribua com o mapa</h2>
 <p style="max-width:62ch;color:var(--mut)">Conhece um recurso que não está aqui ou viu uma informação desatualizada? Conte para a gente. Toda sugestão é verificada antes de ser publicada.</p>
@@ -109,7 +138,7 @@ footer{background:#163a2b;color:#dcebe1;padding:32px 0;font-size:14px}footer a{c
 <div class="ods"><div><h3>ODS 3 · Saúde e Bem-Estar</h3><p style="color:var(--ink)">Facilita o acesso a serviços, espaços de convivência, lazer e alimentação que contribuem para o bem-estar.</p></div><div><h3>ODS 11 · Cidades e Comunidades Sustentáveis</h3><p style="color:var(--ink)">Valoriza o território e aproxima moradores dos recursos locais, incluindo pontos de reciclagem.</p></div></div>
 <p class="note" style="color:#bfe3cb">Essa é uma contribuição do projeto, e não uma solução, por si só, para problemas estruturais da cidade.</p></div></section>
 </main>
-<footer><div class="wrap"><b>O que a cidade tem?</b> · Projeto de extensão universitária (ADS) · Nova Friburgo, RJ.<br>Iniciativa acadêmica e comunitária, sem vínculo oficial com a Prefeitura. Mapa © colaboradores do <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>.</div></footer>
+<footer><div class="wrap"><b>O que a cidade tem?</b> · Projeto de extensão universitária (ADS) · Nova Friburgo, RJ.<br>Iniciativa acadêmica e comunitária, sem vínculo oficial com a Prefeitura. Contato da Prefeitura no <a href="https://www.pmnf.rj.gov.br/">site oficial</a>. Mapa © colaboradores do <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>.</div></footer>
 <dialog id="dlg" aria-labelledby="dt"></dialog>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
@@ -175,9 +204,11 @@ $('#cf').onsubmit=e=>{e.preventDefault();const o=Object.fromEntries(new FormData
  try{const a=JSON.parse(localStorage.getItem('sugestoes')||'[]');a.push(o);localStorage.setItem('sugestoes',JSON.stringify(a))}catch(_){}
  e.target.reset();$('#ok').hidden=false;$('#ok').scrollIntoView({block:'center'})};
 
+function agenda(){const t=new Date().toISOString().slice(0,10),ev=D.filter(r=>r.tipo==='Evento cultural'&&(!r.fim||r.fim>=t));
+ $('#ag').innerHTML=ev.length?ev.map(r=>`<article class="card"><span class="tag" style="--c:#f6e3a8">🗓️ Evento</span><h3>${esc(r.nome)}</h3><p class="meta">${esc(r.horario||'Data não cadastrada')}</p><p>📍 ${esc(r.end||'')}</p><button class="btn sm" data-id="${r.id}">Ver detalhes</button></article>`).join(''):'<div class="empty" style="grid-column:1/-1">Nenhum evento cadastrado no momento. Consulte os calendários abaixo.</div>'}
 initMap();
 fetch('data.json').then(r=>{if(!r.ok)throw 0;return r.json()}).then(d=>{
- D=d;$('#cats').innerHTML=CATS.map(c=>`<button class="cat" style="--c:${c[2]}" data-cat="${esc(c[0])}"><i>${c[1]}</i><b>${esc(c[0])}</b><span>${esc(c[3])}</span><small>${D.filter(r=>r.cat===c[0]).length} recursos</small></button>`).join('');render()
+ D=d;$('#cats').innerHTML=CATS.map(c=>`<button class="cat" style="--c:${c[2]}" data-cat="${esc(c[0])}"><i>${c[1]}</i><b>${esc(c[0])}</b><span>${esc(c[3])}</span><small>${D.filter(r=>r.cat===c[0]).length} recursos</small></button>`).join('');render();agenda()
 }).catch(()=>{$('#list').innerHTML='<div class="msg"><b>Não foi possível carregar os recursos.</b><br>Confira se o arquivo data.json está na mesma pasta e se o site está sendo aberto por um servidor (GitHub Pages ou <code>python -m http.server</code>).</div>'});
 </script>
 </body>
