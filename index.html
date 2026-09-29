@@ -22,7 +22,7 @@ nav a{margin-left:18px;color:var(--ink);text-decoration:none;font-weight:600}nav
 .btn{font:inherit;font-weight:700;border:0;border-radius:999px;padding:12px 22px;background:var(--g1);color:#fff;cursor:pointer;text-decoration:none;display:inline-block}
 .btn:hover{background:#163a2b}.btn.alt{background:#fff;color:var(--g1);border:2px solid var(--g1)}.btn.sm{padding:8px 16px;font-size:14px}
 .hero{background:linear-gradient(180deg,var(--g3),var(--bg));padding:64px 0 24px}
-.hero .wrap{display:grid;grid-template-columns:1.2fr .8fr;gap:32px;align-items:center}
+.hero .wrap{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center}
 .hero h1{font-size:clamp(30px,5vw,50px)}.hero p{max-width:56ch;color:var(--mut);font-size:18px}
 .search{display:flex;gap:8px;margin:22px 0;max-width:560px}
 input,select,textarea{font:inherit;width:100%;padding:12px 14px;border:2px solid var(--line);border-radius:14px;background:#fff;color:var(--ink)}
@@ -98,7 +98,34 @@ form{padding:16px}.leaflet-popup-content .btn{width:100%}}
 <div class="ctas"><a class="btn" href="#explorar" data-view="mapa">Explorar o mapa</a><a class="btn alt" href="#categorias">Ver categorias</a></div>
 <p class="note">Iniciativa acadêmica e comunitária. Não é um serviço oficial da Prefeitura de Nova Friburgo.</p>
 </div>
-<svg viewBox="0 0 400 300" role="img" aria-label="Ilustração de montanhas, árvores e casas"><rect width="400" height="300" rx="36" fill="#e4f0f7"/><circle cx="300" cy="70" r="30" fill="#f6dd9b"/><path d="M0 220 110 90l70 90 60-60 160 130v50H0z" fill="#9fd0ad"/><path d="M0 250 90 160l80 70 90-80 140 120v30H0z" fill="#1e4a38"/><g fill="#fffdf8"><rect x="60" y="235" width="34" height="28"/><rect x="290" y="240" width="40" height="24"/></g><g fill="#3f7ca6"><path d="M56 235 77 216l21 19z"/><path d="M286 240 310 220l24 20z"/></g><circle cx="200" cy="240" r="14" fill="#9fd0ad"/><rect x="198" y="248" width="4" height="16" fill="#5a4a34"/></svg>
+<svg class="photo" viewBox="0 0 1200 650" role="img" aria-label="Ilustração ao pôr do sol: montanhas de Nova Friburgo com floresta, prédios, casinhas e uma igreja ao centro">
+<defs>
+<linearGradient id="ceu" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#397ba4"/><stop offset="55%" stop-color="#e6b78c"/><stop offset="100%" stop-color="#ffe4a3"/></linearGradient>
+<linearGradient id="montanha1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#315d83"/><stop offset="100%" stop-color="#193c50"/></linearGradient>
+<linearGradient id="montanha2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#477b91"/><stop offset="100%" stop-color="#1b4a55"/></linearGradient>
+<linearGradient id="floresta" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#42744b"/><stop offset="100%" stop-color="#102f2b"/></linearGradient>
+</defs>
+<rect width="1200" height="650" fill="url(#ceu)"/>
+<circle cx="1030" cy="290" r="55" fill="#fff0b5" opacity=".9"/>
+<g fill="#ffe0b0" opacity=".55"><path d="M80 170Q130 140 180 165T280 160T390 175L390 185L80 185Z"/><path d="M620 130Q670 105 730 130T850 125T970 135L970 145L620 145Z"/><path d="M900 200Q960 175 1020 195T1150 190L1150 205L900 205Z"/></g>
+<path d="M0 360L100 320L180 340L270 275L350 300L440 220L510 290L600 320L690 260L770 300L850 230L920 285L1010 250L1100 300L1200 270V650H0Z" fill="#557a91"/>
+<path d="M0 390L100 350L180 370L280 310L350 350L430 270L490 310L570 365L650 330L730 355L810 285L890 330L980 310L1080 360L1200 320V650H0Z" fill="url(#montanha1)"/>
+<path d="M0 430L90 385L170 405L250 360L340 390L420 330L500 380L580 405L660 370L750 410L830 345L920 390L1010 360L1100 400L1200 370V650H0Z" fill="url(#montanha2)"/>
+<path d="M0 460Q150 390 300 440T600 450T900 420T1200 450V650H0Z" fill="url(#floresta)"/>
+<path d="M0 500Q150 430 300 475T600 480T900 450T1200 480V650H0Z" fill="#173d30"/>
+<g fill="#244f35"><circle cx="60" cy="450" r="65"/><circle cx="130" cy="470" r="55"/><circle cx="210" cy="460" r="60"/><circle cx="950" cy="460" r="65"/><circle cx="1050" cy="470" r="70"/><circle cx="1140" cy="450" r="80"/></g>
+<g fill="#497342"><circle cx="90" cy="440" r="35"/><circle cx="180" cy="450" r="30"/><circle cx="1000" cy="445" r="38"/><circle cx="1100" cy="440" r="42"/></g>
+<rect x="330" y="485" width="45" height="90" fill="#e5c6a0"/><rect x="380" y="500" width="35" height="75" fill="#d9b8a0"/><rect x="430" y="470" width="55" height="105" fill="#e7d4b6"/><rect x="500" y="495" width="40" height="80" fill="#c9b6a8"/><rect x="570" y="480" width="50" height="95" fill="#e8c9a5"/><rect x="650" y="490" width="45" height="85" fill="#d6c5b6"/><rect x="720" y="465" width="55" height="110" fill="#e4c9ad"/><rect x="800" y="490" width="40" height="85" fill="#d9bca0"/>
+<g fill="#6c8a9a"><path d="M340 495h8v10h-8zM355 495h8v10h-8zM340 515h8v10h-8zM355 515h8v10h-8zM340 535h8v10h-8zM355 535h8v10h-8z"/><path d="M440 480h10v12h-10zM460 480h10v12h-10zM440 505h10v12h-10zM460 505h10v12h-10zM440 530h10v12h-10zM460 530h10v12h-10z"/><path d="M730 475h10v12h-10zM750 475h10v12h-10zM730 500h10v12h-10zM750 500h10v12h-10zM730 525h10v12h-10zM750 525h10v12h-10z"/></g>
+<rect x="80" y="540" width="75" height="45" fill="#f1d5aa"/><path d="M70 540L118 510L165 540Z" fill="#a95e43"/>
+<rect x="180" y="550" width="70" height="40" fill="#e7c6a2"/><path d="M170 550L215 520L260 550Z" fill="#9e5140"/>
+<rect x="870" y="535" width="75" height="50" fill="#f1d6b0"/><path d="M860 535L907 505L955 535Z" fill="#a75d42"/>
+<rect x="970" y="550" width="80" height="40" fill="#e5c7a5"/><path d="M960 550L1010 520L1060 550Z" fill="#a45d40"/>
+<rect x="1080" y="535" width="70" height="50" fill="#e9d0ad"/><path d="M1070 535L1115 505L1160 535Z" fill="#9d5840"/>
+<rect x="560" y="505" width="65" height="75" fill="#e9d8bd"/><path d="M550 505L592 480L635 505Z" fill="#a35d4c"/><rect x="585" y="470" width="14" height="35" fill="#e9d8bd"/><path d="M582 470L592 450L602 470Z" fill="#9d5c4b"/><rect x="587" y="525" width="12" height="30" fill="#795c4a"/><circle cx="592" cy="515" r="5" fill="#6c8a9a"/>
+<path d="M0 590Q200 550 400 590T800 585T1200 570V650H0Z" fill="#102e28"/>
+<g fill="#f5e8d4"><circle cx="50" cy="600" r="8"/><circle cx="65" cy="590" r="8"/><circle cx="80" cy="600" r="8"/><circle cx="65" cy="610" r="8"/><circle cx="1080" cy="610" r="7"/><circle cx="1095" cy="600" r="7"/><circle cx="1110" cy="610" r="7"/><circle cx="1095" cy="620" r="7"/></g>
+</svg>
 </div></section>
 
 <section id="percepcao"><div class="wrap" style="max-width:820px">
